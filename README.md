@@ -1,2 +1,19 @@
 # ln-cnn
 character-level CNNによる、書名のライトノベル度判定器
+
+学習データの取得: 国会図書館データベース　NDL-Bib https://ndl-bib.ndl.go.jp/F?func=login&RN=604101859
+
+ライトノベル系レーベルとして
+電撃文庫、MF文庫、ガガガ文庫、角川スニーカー文庫、角川ビーンズ文庫、ファミ通文庫、アルファポリス、富士見ファンタジア文庫
+
+非ライトノベル系レーベルとして
+新潮文庫、岩波文庫、岩波新書、ちくま学芸文庫、ハヤカワSF、青空文庫　https://www.aozora.gr.jp/
+
+を採用し、書名とライトノベルか否かのラベル(0 or 1)の組をデータとしてを与え、character-level CNNで学習させる。
+
+
+
+NDL-BibからダウンロードしてきたSAV~.datファイルから、書名データのみを取り出す。
+```
+grep 'タイトル' SAV~.dat | grep -v 'タイトルよみ'| grep -v '部分タイトル' | grep -v '他タイトル' | grep -v '並列タイトル' | grep -v '注記' | cut -b27- > names.txt
+```
